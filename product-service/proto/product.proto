@@ -1,0 +1,45 @@
+syntax = "proto3";
+
+option go_package="./pb";
+
+
+
+
+message Product{
+    string pid = 5;
+    string productname = 1;
+    string currency = 2;
+    float price = 3;
+    int64 quantity = 4;
+
+}
+
+message NoParam{}
+
+message ProductRequest{
+    Product product = 1;
+}
+message ProductResponse{
+    Product product = 1;
+}
+
+message ProductArrRespnose{
+    repeated Product product = 1;
+}
+
+message ProductIdRequest{
+    string pid = 1;
+}
+
+service ProductService{
+    rpc CreateProduct(ProductRequest) returns (ProductResponse);
+
+    rpc GetAllProducts(NoParam) returns (ProductArrRespnose);
+
+    rpc GetProductById(ProductIdRequest) returns (ProductResponse);
+
+    rpc UpdateProduct(ProductIdRequest) returns (ProductResponse);
+
+    rpc DeleteProduct(ProductIdRequest) returns (ProductResponse);
+
+}
