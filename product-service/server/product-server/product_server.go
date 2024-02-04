@@ -1,6 +1,7 @@
 package server
 
 import (
+	"context"
 	"fmt"
 	"product-service/pb"
 
@@ -11,7 +12,7 @@ type ProductServiceServerStruct struct {
 	pb.ProductServiceServer
 }
 
-func (server *ProductServiceServerStruct) CreateProduct(req *pb.ProductRequest) (*pb.ProductResponse, error) {
+func (server ProductServiceServerStruct) CreateProduct(context context.Context, req *pb.ProductRequest) (*pb.ProductResponse, error) {
 	productFromRequest := req.GetProduct()
 
 	productFromRequest.Pid = uuid.NewString()
@@ -24,7 +25,7 @@ func (server *ProductServiceServerStruct) CreateProduct(req *pb.ProductRequest) 
 
 }
 
-func (server *ProductServiceServerStruct) GetAllProducts(req *pb.NoParam) (*pb.ProductArrRespnose, error) {
+func (server ProductServiceServerStruct) GetAllProducts(context context.Context, req *pb.NoParam) (*pb.ProductArrRespnose, error) {
 
 	var sampleProductsArr []*pb.Product
 
@@ -36,7 +37,7 @@ func (server *ProductServiceServerStruct) GetAllProducts(req *pb.NoParam) (*pb.P
 
 }
 
-func (server *ProductServiceServerStruct) GetProductById(req *pb.ProductIdRequest) (*pb.ProductResponse, error) {
+func (server ProductServiceServerStruct) GetProductById(context context.Context, req *pb.ProductIdRequest) (*pb.ProductResponse, error) {
 	pid := req.GetPid()
 
 	fmt.Println(pid)
@@ -50,7 +51,7 @@ func (server *ProductServiceServerStruct) GetProductById(req *pb.ProductIdReques
 
 }
 
-func (server *ProductServiceServerStruct) UpdateProduct(req *pb.ProductIdRequest) (*pb.ProductResponse, error) {
+func (server ProductServiceServerStruct) UpdateProduct(context context.Context, req *pb.ProductIdRequest) (*pb.ProductResponse, error) {
 	pid := req.GetPid()
 
 	fmt.Println(pid)
@@ -64,7 +65,7 @@ func (server *ProductServiceServerStruct) UpdateProduct(req *pb.ProductIdRequest
 
 }
 
-func (server *ProductServiceServerStruct) DeleteProduct(req *pb.ProductIdRequest) (*pb.ProductResponse, error) {
+func (server ProductServiceServerStruct) DeleteProduct(context context.Context, req *pb.ProductIdRequest) (*pb.ProductResponse, error) {
 	pid := req.GetPid()
 
 	fmt.Println(pid)
