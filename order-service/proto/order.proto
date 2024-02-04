@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+option go_package = "./pb";
+
+
+message ItemOrder{
+    string itemId = 1;
+    int64 quantity = 2;
+}
+
+
+message Order{
+    string pid = 1;
+    repeated ItemOrder items = 2;
+    
+}
+
+message IndItem {
+    string itemId = 1;
+    int64 quantity = 2;
+    float price = 3;
+}
+
+message Bill{
+    string pid = 2;
+    repeated IndItem items = 3;
+    float totalCost = 1;
+}
+
+
+service OrderService{
+    rpc PlaceOrder(Order)returns(Bill);
+}
