@@ -20,11 +20,19 @@ message ProductRequest{
     Product product = 1;
 }
 message ProductResponse{
+    
+    string message = 2;
     Product product = 1;
 }
 
 message ProductArrRespnose{
+    string message = 2;
     repeated Product product = 1;
+}
+
+message DeleteProductResponse{
+    string message = 1;
+
 }
 
 message ProductIdRequest{
@@ -40,6 +48,6 @@ service ProductService{
 
     rpc UpdateProduct(ProductIdRequest) returns (ProductResponse);
 
-    rpc DeleteProduct(ProductIdRequest) returns (ProductResponse);
+    rpc DeleteProduct(ProductIdRequest) returns (DeleteProductResponse);
 
 }
