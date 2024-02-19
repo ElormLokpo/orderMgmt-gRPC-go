@@ -8,7 +8,12 @@ import (
 )
 
 func CallCreateProduct(client pb.ProductServiceClient) {
-	sampleProduct := &pb.Product{}
+	sampleProduct := &pb.Product{
+		Productname: "Bread",
+		Currency:    "GHS",
+		Price:       20.44,
+		Quantity:    7,
+	}
 
 	req := &pb.ProductRequest{
 		Product: sampleProduct,

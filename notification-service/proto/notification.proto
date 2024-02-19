@@ -1,0 +1,61 @@
+syntax = "proto3";
+
+option go_package = "./pb";
+
+
+message NoParam{}
+
+message Notification{
+    string Pid = 1;
+    string Type = 2;
+    string Message = 3;
+    string Service = 4; 
+}
+
+message NotificationRequest{
+    Notification notification =1;
+}
+
+message NotificationCUDResponse{
+    string message = 1;
+    Notification notification = 2; 
+
+}
+
+message NotificationCUDRequest{
+    string Pid = 1;
+}
+
+message NotificationResponse{
+    Notification notification = 1;
+}
+
+message NotificationExistsRequest{
+    string Pid = 1;
+}
+
+message NotificationExistsResponse{
+    bool Exists = 1;
+}
+
+message NotificationByServiceRequest{
+    string Service = 1;
+}
+
+
+message NotificationArrResponse{
+    repeated Notification notifications = 1;
+}
+
+service NotificationService{
+    rpc NotificationExists(NotificationExistsRequest) returns (NotificationExistsResponse);
+    
+    rpc CreateNotification (NotificationRequest) returns (NotificationCUDResponse);
+    
+    rpc GetNotificationByService(NotificationByServiceRequest) returns (NotificationResponse);
+    rpc GetAllNotifications (NoParam) returns (NotificationArrResponse);
+    rpc GetNotification (NotificationCUDRequest) returns (NotificationResponse);
+
+    rpc UpdateNotification (NotificationCUDRequest) returns (NotificationCUDResponse);
+    rpc DeleteNotification (NotificationCUDRequest) returns (NotificationCUDResponse);
+}
