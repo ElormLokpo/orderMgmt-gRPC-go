@@ -24,7 +24,6 @@ const (
 	NotificationService_GetNotificationByService_FullMethodName = "/NotificationService/GetNotificationByService"
 	NotificationService_GetAllNotifications_FullMethodName      = "/NotificationService/GetAllNotifications"
 	NotificationService_GetNotification_FullMethodName          = "/NotificationService/GetNotification"
-	NotificationService_UpdateNotification_FullMethodName       = "/NotificationService/UpdateNotification"
 	NotificationService_DeleteNotification_FullMethodName       = "/NotificationService/DeleteNotification"
 )
 
@@ -37,7 +36,6 @@ type NotificationServiceClient interface {
 	GetNotificationByService(ctx context.Context, in *NotificationByServiceRequest, opts ...grpc.CallOption) (*NotificationResponse, error)
 	GetAllNotifications(ctx context.Context, in *NoParam, opts ...grpc.CallOption) (*NotificationArrResponse, error)
 	GetNotification(ctx context.Context, in *NotificationCUDRequest, opts ...grpc.CallOption) (*NotificationResponse, error)
-	UpdateNotification(ctx context.Context, in *NotificationCUDRequest, opts ...grpc.CallOption) (*NotificationCUDResponse, error)
 	DeleteNotification(ctx context.Context, in *NotificationCUDRequest, opts ...grpc.CallOption) (*NotificationCUDResponse, error)
 }
 
@@ -94,15 +92,6 @@ func (c *notificationServiceClient) GetNotification(ctx context.Context, in *Not
 	return out, nil
 }
 
-func (c *notificationServiceClient) UpdateNotification(ctx context.Context, in *NotificationCUDRequest, opts ...grpc.CallOption) (*NotificationCUDResponse, error) {
-	out := new(NotificationCUDResponse)
-	err := c.cc.Invoke(ctx, NotificationService_UpdateNotification_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 func (c *notificationServiceClient) DeleteNotification(ctx context.Context, in *NotificationCUDRequest, opts ...grpc.CallOption) (*NotificationCUDResponse, error) {
 	out := new(NotificationCUDResponse)
 	err := c.cc.Invoke(ctx, NotificationService_DeleteNotification_FullMethodName, in, out, opts...)
@@ -121,7 +110,6 @@ type NotificationServiceServer interface {
 	GetNotificationByService(context.Context, *NotificationByServiceRequest) (*NotificationResponse, error)
 	GetAllNotifications(context.Context, *NoParam) (*NotificationArrResponse, error)
 	GetNotification(context.Context, *NotificationCUDRequest) (*NotificationResponse, error)
-	UpdateNotification(context.Context, *NotificationCUDRequest) (*NotificationCUDResponse, error)
 	DeleteNotification(context.Context, *NotificationCUDRequest) (*NotificationCUDResponse, error)
 	mustEmbedUnimplementedNotificationServiceServer()
 }
@@ -144,9 +132,6 @@ func (UnimplementedNotificationServiceServer) GetAllNotifications(context.Contex
 }
 func (UnimplementedNotificationServiceServer) GetNotification(context.Context, *NotificationCUDRequest) (*NotificationResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetNotification not implemented")
-}
-func (UnimplementedNotificationServiceServer) UpdateNotification(context.Context, *NotificationCUDRequest) (*NotificationCUDResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UpdateNotification not implemented")
 }
 func (UnimplementedNotificationServiceServer) DeleteNotification(context.Context, *NotificationCUDRequest) (*NotificationCUDResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteNotification not implemented")
@@ -254,24 +239,6 @@ func _NotificationService_GetNotification_Handler(srv interface{}, ctx context.C
 	return interceptor(ctx, in, info, handler)
 }
 
-func _NotificationService_UpdateNotification_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(NotificationCUDRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(NotificationServiceServer).UpdateNotification(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: NotificationService_UpdateNotification_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(NotificationServiceServer).UpdateNotification(ctx, req.(*NotificationCUDRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 func _NotificationService_DeleteNotification_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(NotificationCUDRequest)
 	if err := dec(in); err != nil {
@@ -316,10 +283,6 @@ var NotificationService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetNotification",
 			Handler:    _NotificationService_GetNotification_Handler,
-		},
-		{
-			MethodName: "UpdateNotification",
-			Handler:    _NotificationService_UpdateNotification_Handler,
 		},
 		{
 			MethodName: "DeleteNotification",
