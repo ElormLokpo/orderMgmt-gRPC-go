@@ -6,10 +6,10 @@ option go_package = "./pb";
 message NoParam{}
 
 message Notification{
-    string Pid = 1;
-    string Type = 2;
-    string Message = 3;
-    string Service = 4; 
+    string pid = 1;
+    string type = 2;
+    string message = 3;
+    string service = 4; 
 }
 
 message NotificationRequest{
@@ -23,7 +23,7 @@ message NotificationCUDResponse{
 }
 
 message NotificationCUDRequest{
-    string Pid = 1;
+    string pid = 1;
 }
 
 message NotificationResponse{
@@ -31,15 +31,15 @@ message NotificationResponse{
 }
 
 message NotificationExistsRequest{
-    string Pid = 1;
+    string pid = 1;
 }
 
 message NotificationExistsResponse{
-    bool Exists = 1;
+    bool exists = 1;
 }
 
 message NotificationByServiceRequest{
-    string Service = 1;
+    string service = 1;
 }
 
 
@@ -56,6 +56,5 @@ service NotificationService{
     rpc GetAllNotifications (NoParam) returns (NotificationArrResponse);
     rpc GetNotification (NotificationCUDRequest) returns (NotificationResponse);
 
-    rpc UpdateNotification (NotificationCUDRequest) returns (NotificationCUDResponse);
     rpc DeleteNotification (NotificationCUDRequest) returns (NotificationCUDResponse);
 }
