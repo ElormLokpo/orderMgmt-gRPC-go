@@ -24,7 +24,7 @@ func NewNotificationServer(client *mongo.Client) NotificationServerStruct {
 
 }
 
-func (server *NotificationServerStruct) NotificationExists(ctx context.Context, req *pb.NotificationExistsRequest) (*pb.NotificationExistsResponse, error) {
+func (server NotificationServerStruct) NotificationExists(ctx context.Context, req *pb.NotificationExistsRequest) (*pb.NotificationExistsResponse, error) {
 	notificationId := req.GetPid()
 
 	filter := bson.M{"pid": notificationId}
@@ -42,7 +42,7 @@ func (server *NotificationServerStruct) NotificationExists(ctx context.Context, 
 
 }
 
-func (server *NotificationServerStruct) CreateNotification(ctx context.Context, req *pb.NotificationRequest) (*pb.NotificationCUDResponse, error) {
+func (server NotificationServerStruct) CreateNotification(ctx context.Context, req *pb.NotificationRequest) (*pb.NotificationCUDResponse, error) {
 	notification := req.GetNotification()
 
 	notification.Pid = uuid.NewString()
@@ -57,7 +57,7 @@ func (server *NotificationServerStruct) CreateNotification(ctx context.Context, 
 	return res, nil
 }
 
-func (server *NotificationServerStruct) GetAllNotifications(ctx context.Context, req *pb.NoParam) (*pb.NotificationArrResponse, error) {
+func (server NotificationServerStruct) GetAllNotifications(ctx context.Context, req *pb.NoParam) (*pb.NotificationArrResponse, error) {
 
 	data, err := server.collection.Find(context.Background(), bson.M{})
 	errHandler.ErrHandler(err, "Error fetching all notifications")
@@ -81,7 +81,7 @@ func (server *NotificationServerStruct) GetAllNotifications(ctx context.Context,
 	return res, nil
 }
 
-func (server *NotificationServerStruct) GetNotification(ctx context.Context, req *pb.NotificationCUDRequest) (*pb.NotificationResponse, error) {
+func (server NotificationServerStruct) GetNotification(ctx context.Context, req *pb.NotificationCUDRequest) (*pb.NotificationResponse, error) {
 	notificationId := req.GetPid()
 
 	var notification *pb.Notification
@@ -97,7 +97,7 @@ func (server *NotificationServerStruct) GetNotification(ctx context.Context, req
 	return res, nil
 }
 
-func (server *NotificationServerStruct) GetNotificationByService(ctx context.Context, req *pb.NotificationByServiceRequest) (*pb.NotificationResponse, error) {
+func (server NotificationServerStruct) GetNotificationByService(ctx context.Context, req *pb.NotificationByServiceRequest) (*pb.NotificationResponse, error) {
 	notificationService := req.GetService()
 
 	var notification *pb.Notification
@@ -113,7 +113,7 @@ func (server *NotificationServerStruct) GetNotificationByService(ctx context.Con
 	return res, nil
 }
 
-func (server *NotificationServerStruct) DeleteNotification(ctx context.Context, req *pb.NotificationCUDRequest) (*pb.NotificationCUDResponse, error) {
+func (server NotificationServerStruct) DeleteNotification(ctx context.Context, req *pb.NotificationCUDRequest) (*pb.NotificationCUDResponse, error) {
 	notificationId := req.GetPid()
 
 	var notification *pb.Notification
